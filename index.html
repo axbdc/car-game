@@ -11,20 +11,32 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        #ar-instruction {
+        #ar-start-overlay {
             position: fixed;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1001;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            text-align: center;
-            font-size: 1.1em;
-            color: black;
-            pointer-events: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #1a1a1a; /* Fundo escuro para contraste */
+            z-index: 1002; /* Acima de tudo */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: white;
+        }
+        #ar-start-overlay button {
+            all: unset;
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            margin-top: 20px;
+            cursor: pointer;
         }
     </style>
 
@@ -32,6 +44,7 @@
 <body style='margin : 0px; overflow: hidden;'>
 
     <a-scene
+        id="ar-scene"
         vr-mode-ui="enabled: false;"
         renderer="logarithmicDepthBuffer: true;"
         ar-pwa> 
@@ -41,7 +54,7 @@
         
         <a-entity
             id="carro"
-            gltf-model="./seu-carro.glb" position="0 0 0" 
+            gltf-model="./seu-carro.glb" position="0 -0.1 0" 
             scale="0.5 0.5 0.5"
             rotation="0 0 0"
             drive-car
@@ -62,20 +75,27 @@
         </div>
     </div>
     
-    <div id="ar-instruction">
-        <p>Aponte a câmara para o chão e **toque no ecrã** para iniciar a Realidade Aumentada e fixar o carro.</p>
+    <div id="ar-start-overlay">
+        <h2>Jogo de Condução AR</h2>
+        <p>A câmara só pode ser ativada com um toque explícito do utilizador.</p>
+        <button onclick="startAR()">INICIAR REALIDADE AUMENTADA</button>
     </div>
 
     <script src="game.js"></script>
 
     <script>
-        document.addEventListener('touchstart', function () {
-            const instruction = document.getElementById('ar-instruction');
-            if (instruction) {
-                instruction.style.display = 'none';
+        function startAR() {
+            const overlay = document.getElementById('ar-start-overlay');
+            const scene = document.getElementById('ar-scene');
+            
+            // 1. Inicia a sessão AR usando o método do A-Frame/AR.js
+            if (scene.components['ar-pwa'] && scene.components['ar-pwa'].enterAR) {
+               scene.components['ar-pwa'].enterAR();
             }
-        });
+            
+            // 2. Esconde a sobreposição
+            overlay.style.display = 'none';
+        }
     </script>
-
 </body>
 </html>
