@@ -3,9 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>Jogo de Condução AR</title>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
+    
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-pwa.js"></script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body style='margin : 0px; overflow: hidden;'>
@@ -13,18 +15,21 @@
     <a-scene
         vr-mode-ui="enabled: false;"
         renderer="logarithmicDepthBuffer: true;"
-        arjs="sourceType: webcam; detectionMode: mono; maxDetectionRate: 30; canvasWidth: 1280; canvasHeight: 960;">
+        ar-pwa> 
 
         <a-entity
             id="carro"
             gltf-model="./seu-carro.glb"
-            position="0 0.2 -2"
+            position="0 0 0" 
             scale="0.5 0.5 0.5"
             rotation="0 0 0"
             drive-car
         ></a-entity>
         
-        <a-camera-static />
+        <a-entity ar-hit-test="target: #carro; type: foot;" ar-plane-anchor>
+        </a-entity>
+        
+        <a-camera></a-camera>
     </a-scene>
 
     <div id="controls-overlay">
@@ -34,8 +39,8 @@
         </div>
 
         <div id="speed-controls">
-            <button id="accelerate" onmousedown="accelerate(true)" onmouseup="accelerate(false)" ontouchstart="accelerate(true)" ontouchend="accelerate(false)">ACELERAR</button>
-            <button id="brake" onmousedown="brake(true)" onmouseup="brake(false)" ontouchstart="brake(true)" ontouchend="brake(false)">TRAVÃO/RÉ</button>
+            <button id="accelerate" onmousedown="accelerate(true)" onmouseup="accelerate(false)" ontouchstart="accelerate(true)" ontouchend="accelerate(false)">ACELERA</button>
+            <button id="brake" onmousedown="brake(true)" onmouseup="brake(false)" ontouchstart="brake(true)" ontouchend="brake(false)">TRAVÃO</button>
         </div>
     </div>
 
