@@ -24,7 +24,7 @@ body {
 /* Divs para agrupar os controles */
 #direction-controls, #speed-controls {
     display: flex;
-    gap: 30px; /* **Afastamento dos botões individuais** */
+    gap: 30px; /* Afastamento dos botões individuais */
     pointer-events: auto; /* Permite interagir com os botões */
     align-items: flex-end; 
 }
@@ -42,7 +42,6 @@ button {
     cursor: pointer;
     user-select: none;
     transition: background-color 0.1s;
-    /* Adiciona margem para afastar da borda inferior */
     margin-bottom: 20px; 
 }
 
