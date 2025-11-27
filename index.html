@@ -17,17 +17,16 @@
         renderer="logarithmicDepthBuffer: true;"
         ar-pwa> 
 
+        <a-entity ar-hit-test="target: #carro; type: foot;" ar-plane-anchor>
+        </a-entity>
+        
         <a-entity
             id="carro"
-            gltf-model="./seu-carro.glb"
-            position="0 0 0" 
+            gltf-model="./seu-carro.glb" position="0 0 0" 
             scale="0.5 0.5 0.5"
             rotation="0 0 0"
             drive-car
         ></a-entity>
-        
-        <a-entity ar-hit-test="target: #carro; type: foot;" ar-plane-anchor>
-        </a-entity>
         
         <a-camera></a-camera>
     </a-scene>
@@ -39,11 +38,32 @@
         </div>
 
         <div id="speed-controls">
-            <button id="accelerate" onmousedown="accelerate(true)" onmouseup="accelerate(false)" ontouchstart="accelerate(true)" ontouchend="accelerate(false)">ACELERA</button>
             <button id="brake" onmousedown="brake(true)" onmouseup="brake(false)" ontouchstart="brake(true)" ontouchend="brake(false)">TRAVÃO</button>
+            <button id="accelerate" onmousedown="accelerate(true)" onmouseup="accelerate(false)" ontouchstart="accelerate(true)" ontouchend="accelerate(false)">ACELERA</button>
         </div>
     </div>
 
     <script src="game.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const scene = document.querySelector('a-scene');
+            
+            if (scene && scene.hasAttribute('ar-pwa')) {
+                scene.addEventListener('loaded', function () {
+                    const startButton = document.querySelector('.a-enter-ar-button');
+                    // Tenta clicar no botão de início AR se existir
+                    if (startButton) {
+                        startButton.click();
+                    } else {
+                        // Tenta iniciar a sessão AR diretamente
+                        if (scene.components['ar-pwa'] && scene.components['ar-pwa'].enterAR) {
+                           scene.components['ar-pwa'].enterAR();
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
