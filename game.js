@@ -16,17 +16,17 @@ function brake(isPressed) {
 function turn(direction, isPressed) {
     if (direction === 'left') {
         isTurningLeft = isPressed;
-        isTurningRight = false; // Garante que não vira nas duas direções
+        isTurningRight = false; 
     } else if (direction === 'right') {
         isTurningRight = isPressed;
-        isTurningLeft = false; // Garante que não vira nas duas direções
+        isTurningLeft = false; 
     }
 }
 
 // Componente A-Frame para a lógica de condução
 AFRAME.registerComponent('drive-car', {
     schema: {
-        // Velocidade máxima de avanço (metros/segundo)
+        // Velocidade máxima de avanço (unidades A-Frame/segundo)
         maxSpeed: { type: 'number', default: 0.5 },
         // Taxa de aceleração
         acceleration: { type: 'number', default: 0.005 },
@@ -61,7 +61,7 @@ AFRAME.registerComponent('drive-car', {
             }
         } else {
             // Desaceleração natural (Fricção)
-            this.speed *= 0.98; // Diminui 2% por tick (ajuste para o sentir certo)
+            this.speed *= 0.98; 
         }
 
         // --- 2. Lógica de Viragem ---
@@ -77,7 +77,7 @@ AFRAME.registerComponent('drive-car', {
         
         // Aplica a rotação apenas se estiver a mover
         if (Math.abs(this.speed) > 0.005) {
-             // Virar mais devagar em marcha-atrás
+            // Virar mais devagar em marcha-atrás
             const turnFactor = (this.speed > 0) ? 1 : 0.5; 
             currentRotation.y += rotationChange * turnFactor;
             el.setAttribute('rotation', currentRotation);
