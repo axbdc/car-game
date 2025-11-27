@@ -1,6 +1,8 @@
 /* Garante que o jogo ocupe toda a tela */
 body {
     touch-action: manipulation; /* Melhora a resposta ao toque */
+    margin: 0;
+    overflow: hidden;
 }
 
 /* Container de sobreposição para os botões */
@@ -13,49 +15,51 @@ body {
     z-index: 1000; /* Garante que os controles fiquem por cima da cena AR */
     pointer-events: none; /* Permite interagir com a cena AR, a menos que seja um botão */
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end; /* Coloca os controles na parte inferior */
-    padding: 20px;
+    justify-content: space-between; /* Afasta os grupos de controlo (esquerda e direita) */
+    align-items: flex-end; /* Coloca tudo na parte inferior da tela */
+    padding: 20px 40px; /* Mais padding nas laterais (esquerda/direita) */
     box-sizing: border-box;
 }
 
 /* Divs para agrupar os controles */
 #direction-controls, #speed-controls {
     display: flex;
-    gap: 15px; /* Espaço entre os botões */
+    gap: 30px; /* **Afastamento dos botões individuais** */
     pointer-events: auto; /* Permite interagir com os botões */
+    align-items: flex-end; 
 }
 
 /* Estilo geral dos botões */
 button {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%; /* Botões redondos */
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     border: 3px solid white;
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-weight: bold;
     cursor: pointer;
     user-select: none;
     transition: background-color 0.1s;
+    /* Adiciona margem para afastar da borda inferior */
+    margin-bottom: 20px; 
 }
 
 button:active {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Ajuste para as setas serem maiores */
+/* Ajuste para as setas de direção */
 #turn-left, #turn-right {
     font-size: 2.5em;
-    line-height: 100px;
+    line-height: 94px; 
     text-align: center;
 }
 
-/* Ajuste para o layout horizontal se necessário (o layout flex já ajuda muito) */
-@media (orientation: landscape) {
-    #controls-overlay {
-        align-items: flex-end; /* Mantém os controles no fundo em modo horizontal */
-        padding: 40px;
-    }
+/* Deixa os botões de velocidade maiores para um controlo mais fácil */
+#accelerate, #brake {
+    width: 120px;
+    height: 120px;
+    font-size: 1.5em;
 }
