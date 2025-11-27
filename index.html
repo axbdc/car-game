@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Jogo de Condução AR</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style='margin : 0px; overflow: hidden;'>
+
+    <a-scene
+        vr-mode-ui="enabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
+        arjs="sourceType: webcam; detectionMode: mono; maxDetectionRate: 30; canvasWidth: 1280; canvasHeight: 960;">
+
+        <a-entity
+            id="carro"
+            gltf-model="./seu-carro.glb"
+            position="0 0.2 -2"
+            scale="0.5 0.5 0.5"
+            rotation="0 0 0"
+            drive-car
+        ></a-entity>
+        
+        <a-camera-static />
+    </a-scene>
+
+    <div id="controls-overlay">
+        <div id="direction-controls">
+            <button id="turn-left" onmousedown="turn('left', true)" onmouseup="turn('left', false)" ontouchstart="turn('left', true)" ontouchend="turn('left', false)">&#9664;</button>
+            <button id="turn-right" onmousedown="turn('right', true)" onmouseup="turn('right', false)" ontouchstart="turn('right', true)" ontouchend="turn('right', false)">&#9654;</button>
+        </div>
+
+        <div id="speed-controls">
+            <button id="accelerate" onmousedown="accelerate(true)" onmouseup="accelerate(false)" ontouchstart="accelerate(true)" ontouchend="accelerate(false)">ACELERAR</button>
+            <button id="brake" onmousedown="brake(true)" onmouseup="brake(false)" ontouchstart="brake(true)" ontouchend="brake(false)">TRAVÃO/RÉ</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
