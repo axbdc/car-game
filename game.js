@@ -48,19 +48,14 @@ AFRAME.registerComponent('drive-car', {
 
         // --- 1. Lógica de Aceleração e Travagem ---
         if (isAccelerating) {
-            // Aumenta a velocidade (limite: maxSpeed)
             this.speed = Math.min(this.speed + data.acceleration, data.maxSpeed);
         } else if (isBraking) {
-            // Travagem/Marcha-Atrás
             if (this.speed > 0) {
-                // Diminui a velocidade (Travão)
                 this.speed = Math.max(0, this.speed - data.brakingRate);
             } else {
-                // Vai para trás (Marcha-Atrás, limite: -maxSpeed / 2)
                 this.speed = Math.max(-data.maxSpeed / 2, this.speed - data.acceleration / 2);
             }
         } else {
-            // Desaceleração natural (Fricção)
             this.speed *= 0.98; 
         }
 
@@ -75,24 +70,17 @@ AFRAME.registerComponent('drive-car', {
             rotationChange -= data.turnSpeed * delta;
         }
         
-        // Aplica a rotação apenas se estiver a mover
         if (Math.abs(this.speed) > 0.005) {
-            // Virar mais devagar em marcha-atrás
             const turnFactor = (this.speed > 0) ? 1 : 0.5; 
             currentRotation.y += rotationChange * turnFactor;
             el.setAttribute('rotation', currentRotation);
         }
 
-
         // --- 3. Atualizar Posição ---
         if (Math.abs(this.speed) > 0.005) {
-            // Obtém a direção atual (z-axis, frente do carro)
             const forwardVector = new THREE.Vector3(0, 0, -1).applyQuaternion(el.object3D.quaternion);
-
-            // Calcula o deslocamento
             const displacement = forwardVector.multiplyScalar(this.speed * delta);
 
-            // Atualiza a posição
             let currentPosition = el.getAttribute('position');
             currentPosition.x += displacement.x;
             currentPosition.y += displacement.y;
