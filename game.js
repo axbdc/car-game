@@ -26,12 +26,12 @@ function turn(direction, isPressed) {
 // Componente A-Frame para a lógica de condução
 AFRAME.registerComponent('drive-car', {
     schema: {
-        // Velocidade máxima de avanço (unidades A-Frame/segundo)
-        maxSpeed: { type: 'number', default: 0.5 },
-        // Taxa de aceleração
-        acceleration: { type: 'number', default: 0.005 },
+        // Velocidade máxima de avanço (AUMENTADA para 1.5)
+        maxSpeed: { type: 'number', default: 1.5 },
+        // Taxa de aceleração (AUMENTADA para 0.015)
+        acceleration: { type: 'number', default: 0.015 },
         // Taxa de travagem/marcha-atrás
-        brakingRate: { type: 'number', default: 0.01 },
+        brakingRate: { type: 'number', default: 0.02 },
         // Velocidade angular de viragem (graus/segundo)
         turnSpeed: { type: 'number', default: 2.0 }
     },
