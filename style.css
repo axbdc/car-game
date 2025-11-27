@@ -1,0 +1,61 @@
+/* Garante que o jogo ocupe toda a tela */
+body {
+    touch-action: manipulation; /* Melhora a resposta ao toque */
+}
+
+/* Container de sobreposição para os botões */
+#controls-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000; /* Garante que os controles fiquem por cima da cena AR */
+    pointer-events: none; /* Permite interagir com a cena AR, a menos que seja um botão */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Coloca os controles na parte inferior */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Divs para agrupar os controles */
+#direction-controls, #speed-controls {
+    display: flex;
+    gap: 15px; /* Espaço entre os botões */
+    pointer-events: auto; /* Permite interagir com os botões */
+}
+
+/* Estilo geral dos botões */
+button {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Botões redondos */
+    border: 3px solid white;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.1s;
+}
+
+button:active {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Ajuste para as setas serem maiores */
+#turn-left, #turn-right {
+    font-size: 2.5em;
+    line-height: 100px;
+    text-align: center;
+}
+
+/* Ajuste para o layout horizontal se necessário (o layout flex já ajuda muito) */
+@media (orientation: landscape) {
+    #controls-overlay {
+        align-items: flex-end; /* Mantém os controles no fundo em modo horizontal */
+        padding: 40px;
+    }
+}
