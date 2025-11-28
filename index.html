@@ -2,65 +2,37 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Jogo de Condução AR</title>
+    <title>Jogo de Condução AR (MindAR)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
     
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-pwa.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-aframe.prod.js"></script>
     
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        #ar-start-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #1a1a1a; /* Fundo escuro para contraste */
-            z-index: 1002; /* Acima de tudo */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            color: white;
-        }
-        #ar-start-overlay button {
-            all: unset;
-            padding: 15px 30px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 8px;
-            font-size: 1.5em;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            margin-top: 20px;
-            cursor: pointer;
-        }
-    </style>
-
 </head>
 <body style='margin : 0px; overflow: hidden;'>
 
     <a-scene
-        id="ar-scene"
-        vr-mode-ui="enabled: false;"
-        renderer="logarithmicDepthBuffer: true;"
-        ar-pwa> 
+        mindar-image="imageTargetSrc: "  embedded
+        color-space="sRGB" 
+        renderer="colorManagement: true, physicallyCorrectLights" 
+        vr-mode-ui="enabled: false" 
+        device-orientation-permission-ui="enabled: false"
+    >
+        <a-assets>
+            <a-asset-item id="carModel" src="./seu-carro.glb"></a-asset-item> </a-assets>
 
-        <a-entity ar-hit-test="target: #carro; type: foot;" ar-plane-anchor>
+        <a-camera active="true" position="0 0 0"></a-camera>
+        
+        <a-entity mindar-target="anchorIndex: 0" rotation="0 0 0" position="0 0 0">
+            <a-gltf-model
+                id="carro"
+                src="#carModel"
+                position="0 -0.5 -2" scale="0.5 0.5 0.5"
+                rotation="0 0 0"
+                drive-car
+            ></a-gltf-model>
         </a-entity>
-        
-        <a-entity
-            id="carro"
-            gltf-model="./seu-carro.glb" position="0 -0.1 0" 
-            scale="0.5 0.5 0.5"
-            rotation="0 0 0"
-            drive-car
-        ></a-entity>
-        
-        <a-camera></a-camera>
     </a-scene>
 
     <div id="controls-overlay">
@@ -75,27 +47,17 @@
         </div>
     </div>
     
-    <div id="ar-start-overlay">
-        <h2>Jogo de Condução AR</h2>
-        <p>A câmara só pode ser ativada com um toque explícito do utilizador.</p>
-        <button onclick="startAR()">INICIAR REALIDADE AUMENTADA</button>
-    </div>
-
     <script src="game.js"></script>
-
+    
     <script>
-        function startAR() {
-            const overlay = document.getElementById('ar-start-overlay');
-            const scene = document.getElementById('ar-scene');
-            
-            // 1. Inicia a sessão AR usando o método do A-Frame/AR.js
-            if (scene.components['ar-pwa'] && scene.components['ar-pwa'].enterAR) {
-               scene.components['ar-pwa'].enterAR();
-            }
-            
-            // 2. Esconde a sobreposição
-            overlay.style.display = 'none';
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // O MindAR geralmente inicia a câmara automaticamente, mas o toque é o seguro.
+            // Se o ecrã ficar preto (não branco), toque no ecrã para iniciar a câmara.
+            const scene = document.querySelector('a-scene');
+            scene.addEventListener('mindar-started', function() {
+                console.log("MindAR Session Started");
+            });
+        });
     </script>
 </body>
 </html>
